@@ -9,10 +9,32 @@
     "dev": "webpack-dev-server --config webpack.config.dev.js",
     "dev:hot": "npm run dev -- --hot",
     "format": "pretty-quick --pattern \"**/*.*(js|jsx|scss|sass|css|json|ts|html)\"",
-    "test": "jest",
-    "lint": "eslint ./"
+    "test": "jest --testPathIgnorePatterns=\"orig\" --passWithNoTests=true",
+    "x_lint": "eslint \"edition/**\"",
+    "x_eslint:source": "eslint . --ignore-pattern=*.spec.js --ext=.jsx --ext=.js",
+    "x_eslint:test": "eslint . -c=.eslintrc.test --ext=.spec.jsx --ext=.spec.js",
+    "x_eslint": "touch dummy.js && npm run eslint:source && npm run eslint:test",
+    "lint": "eslint ./",
+    "eslint:source": "eslint . --ignore-pattern=*.spec.js --ext=.jsx --ext=.js",
+    "eslint:test": "eslint . -c=.eslintrc.test --ext=.spec.jsx --ext=.spec.js",
+    "eslint": "touch dummy.js dummy.test.js && npm run lint"
   },
-  "keywords": [],
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && npm run eslint && npm run test"
+    }
+  },
+  "keywords": [
+    "react",
+    "git",
+    "javascript",
+    "npm",
+    "js",
+    "webpack",
+    "eslint",
+    "husky",
+    "jest"
+  ],
   "author": "Stephen A. Ingram <stephen.a.ingram@gmail.com> (https://moolisoft.com/)",
   "license": "MIT",
   "devDependencies": {
@@ -21,17 +43,14 @@
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-private-methods": "^7.6.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/polyfill": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
-    "@hot-loader/react-dom": "^16.9.0",
     "@testing-library/jest-dom": "^4.1.0",
     "@testing-library/react": "^9.1.4",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
-    "core-js": "^3.2.1",
     "css-loader": "^3.2.0",
     "eslint": "^6.3.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
@@ -41,17 +60,22 @@
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.1",
-    "prop-types": "^15.7.2",
-    "react": "^16.9.0",
     "react-axe": "^3.3.0",
-    "react-dom": "^16.9.0",
-    "react-hot-loader": "^4.12.13",
-    "regenerator-runtime": "^0.13.3",
     "style-loader": "^1.0.0",
     "webpack": "^4.40.1",
     "webpack-bundle-analyzer": "^3.5.0",
     "webpack-cli": "^3.3.8",
     "webpack-dev-server": "^3.8.0",
     "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.6.0",
+    "@hot-loader/react-dom": "16.9.0",
+    "core-js": "3.2.1",
+    "prop-types": "15.7.2",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-hot-loader": "^4.12.13",
+    "regenerator-runtime": "0.13.3"
   }
 }
